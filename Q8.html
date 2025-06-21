@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>人生咖啡館</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="img-wrapper">
+            <img src="images/Q8.png" alt="Q8" class="responsive-img" />
+            <img src="images/8-1.png" alt="8-1" class="overlay-img img-1-1" onclick="saveAndNext('Q8', 1)" />
+            <img src="images/8-2.png" alt="8-2" class="overlay-img img-1-2" onclick="saveAndNext('Q8', 2)" />
+            <img src="images/8-3.png" alt="8-3" class="overlay-img img-1-3" onclick="saveAndNext('Q8', 3)" />
+            <img src="images/8-4.png" alt="8-4" class="overlay-img img-1-4" onclick="saveAndNext('Q8', 4)" />
+        </div>
+    </div>
+
+    <script>
+        function saveAndNext(question, score) {
+            localStorage.setItem(question, score); // 儲存當前題目的分數
+            window.location.href = 'result.html'; // 換下一題頁面
+        }
+    </script>
+</body>
+</html>

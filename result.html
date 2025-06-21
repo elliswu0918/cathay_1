@@ -1,0 +1,126 @@
+<body>
+    <!-- 載入動畫 -->
+    <div id="loading">
+      <img src="images/讀取畫面.gif" alt="載入中" />
+    </div>
+  
+    <!-- 結果區域 -->
+    <div id="result" style="display: none; position: relative; text-align: center;">
+      <img id="result-image" style="max-width: 90%;" />
+  
+      <!-- 複製按鈕圖示 -->
+      <img
+        src="images/copy_1621635.png"
+        alt="複製"
+        onclick="copyResult()"
+        style="
+          position: absolute;
+          bottom: 180px;
+          right: 130px;
+          width: 48px;
+          height: 48px;
+          cursor: pointer;
+        "
+      />
+      <a href="https://line.me/R/ti/p/@914rhpnh" target="_blank">
+        <img 
+          src="images/LINE.png" 
+          alt="加入LINE好友" 
+          style="position: absolute; 
+          bottom: -15px;
+           left: 500px; 
+           width: 150px; 
+           height: 250px; 
+           cursor: pointer;"
+        />
+      </a>
+    </div>
+  
+    <script>
+      // 儲存目前要複製的完整文字內容
+      let currentResultText = '';
+  
+      // 所有結果對應的圖片和完整描述文字
+      const resultData = {
+        '結果一': {
+          title: '拼命的拿鐵三郎',
+          image: '拼命的拿鐵三郎.png',
+          description: `責任感強，是團隊裡的超級隊長，專長是在書著前用 Excel 邊哭邊畫圖表。人生座右銘是：「今日事今日畢、明日事...先做一半」，工作如山也照單全收，主管交代的事永遠最優先，自己的生活則排在工作後的備註欄。不只是最 carry 的隊友，更是團隊的心靈雞湯＋行動白板＋危機處理小組。\n\n醫生建議「早點睡、多運動」？對不起，這句話不在他的 To-Do List 上。\n健康年齡：二十歲的體力、十歲的情緒管理、八十歲的身體指數。`
+        },
+        '結果二': {
+          title: '神經大條經典奶茶',
+          image: '神經大條經典奶茶.png',
+          description: `每天活得像是一場即興喜劇秀，口頭禪是：「我現在要幹嘛？」走到樓下才發現鞋子穿反、上了公車才發現搭錯線、吃完飯才想起自己是來買東西的，手機永遠找不到的人，但其實手機就在他手上，或耳朵旁。\n\n令人無語到想笑，有時候會懷疑你是如何平安無事長到這個年紀的... 但你也有讓人愛不釋手的魅力：不做作、不計較、總是笑笑的，像是一杯經典奶茶，雖然有點甜、有點迷糊，但總是讓身邊的人自在又舒服。`
+        },
+        '結果三': {
+          title: '好安心薑母茶',
+          image: '好安心薑母茶.png',
+          description: `人如其名，溫溫熱熱、安安心心，專治人生風寒與社交感冒。個性偏保守沈穩，對於冒險與熱血完全沒興趣。人生哲學是：「不做就不會錯」挑戰新事物？不如挑選新的養生茶包...\n\n在團隊裡，你是天生的和平使者，一邊泡茶一邊化解紛爭。至於高風險投資？你的反應是：「那個會讓我血壓升高，我還是存定存好了」。對你來說，比起大賺一筆，更怕投資失敗破產，人生目標就是穩穩地過、暖暖地活。`
+        },
+        '結果四': {
+          title: '看感覺摩卡咖啡',
+          image: '看感覺摩卡咖啡.png',
+          description: `你最懂得如何取悅自己，平日吃好穿美、限量新品不手，週末還要安排一點身心靈療癒（雖然療癒的是錢包出走的焦慮）。\n\n月底看帳戶時會短暫靜默五秒，然後默默說出：「我下個月一定會改善」——雖然你自己也知道，那只是你對錢包講的幹話。\n\n你喜歡挑戰新事物，不怕踩雷、不怕犯錯，投資理財對你來說不是風險，因為你願意為成果承擔風險的勇氣。但就像摩卡的甜背後藏著一點苦，投資路上風險難免，光靠感覺，總有一天可能會感覺「不保」...`
+        },
+        '結果五': {
+          title: '向前衝冷萃咖啡',
+          image: '向前衝冷萃咖啡.png',
+          description: `背包永遠在門口 standby、護照比身分證還常帶在身上的人。週五下班前腦中就已經在沙巴跳海、在京都賞楓、在冰島追光了。其實手機裡的旅遊清單已經多到能直接出版《世界末日來臨前必去300個地方》。\n\n但你永遠不知道下一杯冷萃是喝出冒險，還是喝到驚險，風險百百種：自然災害、交通意外、財物損失。下次訂機票時，別忘了給自己也「加購一點安全感」，不然你的人生可能會變成一場直播中的災難片。`
+        }
+      };
+  
+      window.onload = function () {
+        // 分數統計
+        const scores = {
+          Q1: parseInt(localStorage.getItem('Q1')) || 0,
+          Q2: parseInt(localStorage.getItem('Q2')) || 0,
+          Q3: parseInt(localStorage.getItem('Q3')) || 0,
+          Q4: parseInt(localStorage.getItem('Q4')) || 0,
+          Q5: parseInt(localStorage.getItem('Q5')) || 0,
+          Q6: parseInt(localStorage.getItem('Q6')) || 0,
+          Q7: parseInt(localStorage.getItem('Q7')) || 0,
+          Q8: parseInt(localStorage.getItem('Q8')) || 0,
+        };
+  
+        const resultScores = {
+          '結果一': scores.Q1 + scores.Q2,
+          '結果二': scores.Q3 + scores.Q4,
+          '結果三': scores.Q5 + scores.Q6,
+          '結果四': scores.Q5 + scores.Q6, // 同分
+          '結果五': scores.Q7 + scores.Q8,
+        };
+  
+        let maxScore = -Infinity;
+        let maxResults = [];
+  
+        for (const [key, score] of Object.entries(resultScores)) {
+          if (score > maxScore) {
+            maxScore = score;
+            maxResults = [key];
+          } else if (score === maxScore) {
+            maxResults.push(key);
+          }
+        }
+  
+        let maxResult = maxResults[0];
+        if (maxResults.includes('結果三') || maxResults.includes('結果四')) {
+          maxResult = Math.random() < 0.5 ? '結果三' : '結果四';
+        }
+  
+        const result = resultData[maxResult];
+        currentResultText = `${result.title}\n\n${result.description}`;
+  
+        // 更新畫面
+        document.getElementById("result-image").src = "images/" + result.image;
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("result").style.display = "block";
+      };
+  
+      function copyResult() {
+        navigator.clipboard.writeText(currentResultText)
+          .then(() => alert("已複製完整描述文字，可貼到 LINE！"))
+          .catch(() => alert("複製失敗，請手動複製"));
+      }
+    </script>
+  </body>
+  

@@ -1,0 +1,36 @@
+.img-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.img-wrapper .responsive-img {
+  display: block;
+}
+
+.img-wrapper .btn-gif {
+  position: absolute;
+  left: 50%;   /* 水平置中，可依需求調整 */
+  top: 80%;    /* 垂直置中，可依需求調整 */
+  transform: translate(-50%, -50%); /* 精準置中 */
+  cursor: pointer;
+  width: 800px; /* 按鈕大小可依需求調整 */
+  height: auto;
+  /* 你也可以用 right/bottom/top/left 來微調位置 */
+}
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* 讓圖片置中，可選 */
+  }
+  .overlay-img {
+    position: absolute;
+    width: 600px;   /* 你可以依需求調整每張圖的大小 */
+    height: auto;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .img-1-1 { left: 20%; top: 5%; }
+  .img-1-2 { left: 20%; top: 15%; }
+  .img-1-3 { left: 20%; top: 25%; }
+  .img-1-4 { left: 20%; top: 35%; } 
