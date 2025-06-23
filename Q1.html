@@ -28,6 +28,11 @@
 
     <script>
         function saveAndNext(question, score) {
+                gtag('event', 'answer_q1', {
+                'event_category': 'engagement',
+                'event_label': 'q1_button',
+                'value': 1
+            });
             localStorage.setItem(question, score); // 儲存當前題目的分數
             window.location.href = 'Q2.html'; // 換下一題頁面
         }
