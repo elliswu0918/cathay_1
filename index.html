@@ -1,217 +1,42 @@
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ5PVJGLXH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-WJ5PVJGLXH');
-</script>
 
-<body>
-    <!-- 載入動畫 -->
-    <div id="loading">
-      <img src="images/讀取畫面.gif" alt="載入中" />
-    </div>
-  
-    <!-- 結果區域 -->
-    <div id="result" style="display: none; position: relative; text-align: center;">
-      <img id="result-image" style="max-width: 90%;" />
-  
-      <!-- 複製按鈕圖示 -->
-      <img
-        src="images/copy_1621635.png"
-        alt="複製"
-        onclick="copyResult()"
-        style="
-          position: absolute;
-          bottom: 180px;
-          right: 130px;
-          width: 48px;
-          height: 48px;
-          cursor: pointer;
-        "
-      />
-      
-      <p style="text-align:center; color:#333; font-size:18px;">
-        複製上方結果，貼到下方聊天機器人，立即獲得專屬保險建議！
-      </p>
-    </div>
-  
-    <!-- 聊天機器人區塊 -->
-    <div id="chatbot-container" style="width: 400px; margin: 40px auto 0; border: 1px solid #ccc; border-radius: 10px; background: #fafbfc;">
-      <div id="chatbot-messages" style="height: 220px; overflow-y: auto; padding: 16px; font-size: 16px;"></div>
-      <div style="display: flex; border-top: 1px solid #eee;">
-        <input id="chatbot-input" type="text" placeholder="請貼上你的測驗結果標題..." style="flex: 1; border: none; padding: 12px; font-size: 16px; border-radius: 0 0 0 10px;">
-        <button onclick="sendToChatbot()" style="border: none; background: #4fc08d; color: #fff; padding: 0 24px; font-size: 16px; border-radius: 0 0 10px 0; cursor: pointer;">送出</button>
-      </div>
-    </div>
-  
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>人生咖啡館</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ5PVJGLXH"></script>
     <script>
-      // 儲存目前要複製的完整文字內容
-      let currentResultText = '';
-  
-      // 所有結果對應的圖片和完整描述文字
-      const resultData = {
-        '結果一': {
-          title: '拼命的拿鐵三郎',
-          image: '拼命的拿鐵三郎.png',
-          description: `責任感強，是團隊裡的超級隊長，專長是在書著前用 Excel 邊哭邊畫圖表。人生座右銘是：「今日事今日畢、明日事...先做一半」，工作如山也照單全收，主管交代的事永遠最優先，自己的生活則排在工作後的備註欄。不只是最 carry 的隊友，更是團隊的心靈雞湯＋行動白板＋危機處理小組。\n\n醫生建議「早點睡、多運動」？對不起，這句話不在他的 To-Do List 上。\n健康年齡：二十歲的體力、十歲的情緒管理、八十歲的身體指數。`
-        },
-        '結果二': {
-          title: '神經大條經典奶茶',
-          image: '神經大條經典奶茶.png',
-          description: `每天活得像是一場即興喜劇秀，口頭禪是：「我現在要幹嘛？」走到樓下才發現鞋子穿反、上了公車才發現搭錯線、吃完飯才想起自己是來買東西的，手機永遠找不到的人，但其實手機就在他手上，或耳朵旁。\n\n令人無語到想笑，有時候會懷疑你是如何平安無事長到這個年紀的... 但你也有讓人愛不釋手的魅力：不做作、不計較、總是笑笑的，像是一杯經典奶茶，雖然有點甜、有點迷糊，但總是讓身邊的人自在又舒服。`
-        },
-        '結果三': {
-          title: '薑心比心茶',
-          image: '薑心比心茶.png',
-          description: `人如其名，溫溫熱熱、安安心心，專治人生風寒與社交感冒。個性偏保守沈穩，對於冒險與熱血完全沒興趣。人生哲學是：「不做就不會錯」挑戰新事物？不如挑選新的養生茶包...\n\n在團隊裡，你是天生的和平使者，一邊泡茶一邊化解紛爭。至於高風險投資？你的反應是：「那個會讓我血壓升高，我還是存定存好了」。對你來說，比起大賺一筆，更怕投資失敗破產，人生目標就是穩穩地過、暖暖地活。`
-        },
-        '結果四': {
-          title: '看感覺摩卡咖啡',
-          image: '看感覺摩卡咖啡.png',
-          description: `你最懂得如何取悅自己，平日吃好穿美、限量新品不手，週末還要安排一點身心靈療癒（雖然療癒的是錢包出走的焦慮）。\n\n月底看帳戶時會短暫靜默五秒，然後默默說出：「我下個月一定會改善」——雖然你自己也知道，那只是你對錢包講的幹話。\n\n你喜歡挑戰新事物，不怕踩雷、不怕犯錯，投資理財對你來說不是風險，因為你願意為成果承擔風險的勇氣。但就像摩卡的甜背後藏著一點苦，投資路上風險難免，光靠感覺，總有一天可能會感覺「不保」...`
-        },
-        '結果五': {
-          title: '向前沖冷萃咖啡',
-          image: '向前沖冷萃咖啡.png',
-          description: `背包永遠在門口 standby、護照比身分證還常帶在身上的人。週五下班前腦中就已經在沙巴跳海、在京都賞楓、在冰島追光了。其實手機裡的旅遊清單已經多到能直接出版《世界末日來臨前必去300個地方》。\n\n但你永遠不知道下一杯冷萃是喝出冒險，還是喝到驚險，風險百百種：自然災害、交通意外、財物損失。下次訂機票時，別忘了給自己也「加購一點安全感」，不然你的人生可能會變成一場直播中的災難片。`
-        }
-      };
-  
-      window.onload = function () {
-        // 分數統計
-        const scores = {
-          Q1: parseInt(localStorage.getItem('Q1')) || 0,
-          Q2: parseInt(localStorage.getItem('Q2')) || 0,
-          Q3: parseInt(localStorage.getItem('Q3')) || 0,
-          Q4: parseInt(localStorage.getItem('Q4')) || 0,
-          Q5: parseInt(localStorage.getItem('Q5')) || 0,
-          Q6: parseInt(localStorage.getItem('Q6')) || 0,
-          Q7: parseInt(localStorage.getItem('Q7')) || 0,
-          Q8: parseInt(localStorage.getItem('Q8')) || 0,
-        };
-  
-        const resultScores = {
-          '結果一': scores.Q1 + scores.Q2,
-          '結果二': scores.Q3 + scores.Q4,
-          '結果三': scores.Q5 + scores.Q6,
-          '結果四': scores.Q5 + scores.Q6, // 同分
-          '結果五': scores.Q7 + scores.Q8,
-        };
-  
-        let maxScore = -Infinity;
-        let maxResults = [];
-  
-        for (const [key, score] of Object.entries(resultScores)) {
-          if (score > maxScore) {
-            maxScore = score;
-            maxResults = [key];
-          } else if (score === maxScore) {
-            maxResults.push(key);
-          }
-        }
-  
-        let maxResult = maxResults[0];
-        if (maxResults.includes('結果三') || maxResults.includes('結果四')) {
-          maxResult = Math.random() < 0.5 ? '結果三' : '結果四';
-        }
-  
-        const result = resultData[maxResult];
-        currentResultText = `${result.title}\n\n${result.description}`;
-  
-        // 更新畫面
-        document.getElementById("result-image").src = "images/" + result.image;
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("result").style.display = "block";
-      };
-  
-      function copyResult() {
-        navigator.clipboard.writeText(currentResultText)
-          .then(() => alert("已複製完整描述文字，可貼到下方聊天機器人！"))
-          .catch(() => alert("複製失敗，請手動複製"));
-      }
-  
-      // 保險建議對應表（用關鍵字陣列）
-      const insuranceSuggest = [
-        {
-          keywords: ['向前沖冷萃咖啡', '背包', '旅遊', '冒險'],
-          name: '旅平險',
-         
-          desc: '旅行活動本身伴隨多種不可控因素，旅平險是最貼近你日常生活的實用保險！'
-        },
-        {
-          keywords: ['薑心比心茶', '安安心心', '和平使者', '穩穩地過'],
-          name: '儲蓄型保險',
-          
-          desc: '儲蓄型保險提供穩定回報與長期資金安全，適合你穩健累積財務。'
-        },
-        {
-          keywords: ['拼命的拿鐵三郎', '責任感強', '超級隊長', 'carry'],
-          name: '重大傷害險',
-         
-          desc: '重大傷害險可提供意外傷病的資金支持，避免突發重病使生活陷入困難。'
-        },
-        {
-          keywords: ['看感覺摩卡咖啡', '取悅自己', '投資理財', '新品'],
-          name: '投資型保險',
-         
-          desc: '投資型保險讓你靈活配置資產，兼顧保障與理財功能。'
-        },
-        {
-          keywords: ['神經大條經典奶茶', '即興喜劇', '迷糊', '自在'],
-          name: '意外險',
-        
-          desc: '意外險能補償因突發意外造成的損失，給你多一層保障。'
-        }
-      ];
-  
-      function sendToChatbot() {
-        const input = document.getElementById('chatbot-input');
-        const messages = document.getElementById('chatbot-messages');
-        const userText = input.value.trim();
-        if (!userText) return;
-  
-        // GA4 重大事件：送出訊息
-        gtag('event', 'chatbot_send', {
-          'event_category': 'engagement',
-          'event_label': 'chatbot_input',
-          'value': 1
-        });
-  
-        // 顯示使用者訊息
-        messages.innerHTML += `<div style="text-align:right; margin-bottom:8px;"><span style="background:#e0f7fa; padding:6px 12px; border-radius:12px; display:inline-block;">${userText}</span></div>`;
-  
-        // 模糊比對
-        let found = false;
-        for (const ins of insuranceSuggest) {
-          if (ins.keywords.some(keyword => userText.includes(keyword))) {
-            // GA4 重大事件：成功推薦
-            gtag('event', 'chatbot_recommend', {
-              'event_category': 'engagement',
-              'event_label': 'chatbot_recommend',
-              'insurance': ins.name,
-              'value': 1
-            });
-  
-            messages.innerHTML += `
-              <div style="text-align:left; margin-bottom:16px;">
-                <span style="background:#f1f8e9; padding:6px 12px; border-radius:12px; display:inline-block;">推薦給你：<b>${ins.name}</b><br>${ins.desc}</span><br>
-                <div style='margin-top:10px;'>
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSde3iW_Wtq0IjHIa994OZLK5x3B-xOtPRttYccC6tZLxFTPyA/viewform" target="_blank" style="color:#1976d2; text-decoration:underline; font-size:15px;">👉 填寫測後心得，幫助我們更好！</a>
-                </div>
-              </div>
-            `;
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          messages.innerHTML += `<div style="text-align:left; margin-bottom:8px;"><span style="background:#ffe0e0; padding:6px 12px; border-radius:12px; display:inline-block;">請貼上你的測驗結果內容（標題或描述皆可）</span></div>`;
-        }
-        messages.scrollTop = messages.scrollHeight;
-        input.value = '';
-      }
+        window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-WJ5PVJGLXH');
     </script>
-  </body>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="img-wrapper">
+            <img src="images/心理測驗首圖.png" alt="心理測驗首圖" class="responsive-img" />
+            <img src="images/泡咖啡.gif" alt="開始心理測驗" class="responsive-img btn-gif" id="start-btn"/>
+        </div>
+    </div>
+    <script>
+        document.getElementById('start-btn').onclick = function() {
+            window.location.href = 'Q1.html';
+
+            // GA4 重大事件追蹤
+            gtag('event', 'start_test', {
+                'event_category': 'engagement',
+                'event_label': 'start_button',
+                'value': 1
+            });
+        };
+    </script>
+</body>
+</html>
+
   
