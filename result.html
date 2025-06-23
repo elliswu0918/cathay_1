@@ -192,14 +192,7 @@
         let found = false;
         for (const ins of insuranceSuggest) {
           if (ins.keywords.some(keyword => userText.includes(keyword))) {
-            // GA4 重大事件：成功推薦
-            gtag('event', 'chatbot_recommend', {
-              'event_category': 'engagement',
-              'event_label': 'chatbot_recommend',
-              'insurance': ins.name,
-              'value': 1
-            });
-  
+
             messages.innerHTML += `
               <div style="text-align:left; margin-bottom:16px;">
                 <span style="background:#f1f8e9; padding:6px 12px; border-radius:12px; display:inline-block;">推薦給你：<b>${ins.name}</b><br>${ins.desc}</span><br>
