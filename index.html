@@ -26,8 +26,14 @@
     <script>
         document.getElementById('start-btn').onclick = function() {
             window.location.href = 'Q1.html';
+
+            // GA4 重大事件追蹤
+            gtag('event', 'start_test', {
+                'event_category': 'engagement',
+                'event_label': 'start_button',
+                'value': 1
+            });
         };
-        </script>
-   
+    </script>
 </body>
 </html>
